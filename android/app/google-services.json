@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1005349147905",
+    "project_id": "idpb-valentes-22b65",
+    "storage_bucket": "idpb-valentes-22b65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005349147905:android:a07250c676a86d9c20b700",
+        "android_client_info": {
+          "package_name": "com.interestelar.idpb_valentes_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1005349147905-7ab0ncg8a8f8145l6pr4gqief5h84fel.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.interestelar.idpb_valentes_app",
+            "certificate_hash": "c23cbf7f637dd9adcd2c7057ba4a94ecb472f6d7"
+          }
+        },
+        {
+          "client_id": "1005349147905-bi4d330f6k70hnq4aa6f5fmg6o19brsq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXdjWgOVCfH6IWmswRssAuu4EhigjQFVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1005349147905-bi4d330f6k70hnq4aa6f5fmg6o19brsq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
