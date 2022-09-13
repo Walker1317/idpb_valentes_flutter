@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:idpb_valentes_app/models/app_data.dart';
+import 'package:idpb_valentes_app/models/usuario.dart';
 import 'package:idpb_valentes_app/screens/agenda/agenda_screen.dart';
 import 'package:idpb_valentes_app/screens/celulas/celulas_screen.dart';
 import 'package:idpb_valentes_app/screens/contato/contato_screen.dart';
@@ -24,9 +28,36 @@ class _BaseScreenState extends State<BaseScreen> {
   double opacityLoading = 1;
   PageController pageController = PageController();
   bool loading = true;
+  Usuario? usuario;
+  AppData? appData;
+
+  _recoverUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    print(user);
+    if(user != null){
+      print("usuario logado");
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+      .collection("usuarios").doc(user!.uid).get();
+      setState(() {
+        usuario = Usuario.fromDocumentSnapshot(snapshot);
+      });
+    } else {
+      print("usuario nao logado");
+      usuario = Usuario();
+      usuario!.adm = false;
+    }
+
+    DocumentSnapshot dataSnapshot = await FirebaseFirestore.instance
+    .collection("data").doc("links").get();
+
+    setState(() {
+      appData = AppData.fromDocumentSnapshot(dataSnapshot);
+      _stateManagement();
+    });
+  }
 
   _stateManagement(){
-    Future.delayed(const Duration(seconds: 2)).then((value){
+    Future.delayed(const Duration(seconds: 0)).then((value){
       setState(() {
         opacityLoading = 0;
         _setHomeOpacity();
@@ -46,7 +77,7 @@ class _BaseScreenState extends State<BaseScreen> {
   @override
   void initState() {
     super.initState();
-    _stateManagement();
+    _recoverUserData();
   }
 
   @override
@@ -74,18 +105,18 @@ class _BaseScreenState extends State<BaseScreen> {
           controller: pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            HomeScreen(pageController),
+            HomeScreen(pageController, appData!, usuario!),
             QuemSomos(pageController),
             MinisteriosScreen(pageController),
             CelulasScreen(pageController),
-            AgendaScreen(pageController),
+            AgendaScreen(pageController, usuario!),
             EstudosScreen(pageController),
             GaleriaScreen(pageController),
             LocalizacaoScreen(pageController),
-            ContatoScreen(pageController),
+            ContatoScreen(pageController, appData!),
             YoutubeScreen(pageController),
-            RedesScreen(pageController),
-            ContribuicaoScreen(pageController),
+            RedesScreen(pageController, appData!),
+            ContribuicaoScreen(pageController, appData!),
           ],
         ),
       );

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:idpb_valentes_app/models/app_data.dart';
+import 'package:idpb_valentes_app/widgets/app_widgets.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RedesScreen extends StatefulWidget {
-  RedesScreen(this.pageController, {super.key});
+  RedesScreen(this.pageController, this.appData, {super.key});
   PageController pageController;
+  AppData appData;
 
   @override
   State<RedesScreen> createState() => _RedesScreenState();
@@ -13,6 +18,17 @@ class _RedesScreenState extends State<RedesScreen> {
   
   _back(){
     widget.pageController.jumpToPage(0);
+  }
+
+  Future _urlLauncher(String link) async {
+    final Uri url = Uri.parse(link);
+    try{
+      if(!await launchUrl(url, mode: LaunchMode.externalApplication)){
+        throw "Url Inválida";
+      }
+    } catch (e){
+      print("ERRO AO ABRIR LINK: $e");
+    }
   }
 
   @override
@@ -48,9 +64,18 @@ class _RedesScreenState extends State<RedesScreen> {
             ),
             body: SingleChildScrollView(
               padding: const EdgeInsets.all(20),
-              child: Column(
-                children: const [
-
+              child: GridView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                ),
+                children: [
+                  AppWidgets().homeTile(Ionicons.logo_facebook, "Facebook", ()=> _urlLauncher(widget.appData.facebook)),
+                  AppWidgets().homeTile(Ionicons.logo_instagram, "Instagram", ()=> _urlLauncher(widget.appData.instagram)),
+                  AppWidgets().homeTile(Ionicons.logo_tiktok, "TikTok", ()=> _urlLauncher(widget.appData.tiktok)),
                 ],
               ),
             )

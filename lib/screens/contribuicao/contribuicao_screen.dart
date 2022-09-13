@@ -1,8 +1,11 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
+import 'package:idpb_valentes_app/models/app_data.dart';
 
 class ContribuicaoScreen extends StatefulWidget {
-  ContribuicaoScreen(this.pageController, {super.key});
+  ContribuicaoScreen(this.pageController, this.appData, {super.key});
   PageController pageController;
+  AppData appData;
 
   @override
   State<ContribuicaoScreen> createState() => _ContribuicaoScreenState();
@@ -47,10 +50,55 @@ class _ContribuicaoScreenState extends State<ContribuicaoScreen> {
               ),
             ),
             body: SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(top: 10),
               child: Column(
-                children: const [
-
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.pix),
+                    title: const Text("PIX"),
+                    trailing: IconButton(
+                      onPressed: (){
+                        FlutterClipboard.copy(widget.appData.pix)
+                        .then((value){
+                          print("Copiado!");
+                          ScaffoldMessenger.of(context)
+                            .showSnackBar(
+                            const SnackBar(
+                              duration: Duration(seconds: 1),
+                              backgroundColor: Colors.blue,
+                              content: Text("Copiado")
+                            ),
+                          );
+                        })
+                        .catchError((e)=> print("Erro ao copiar"));
+                      },
+                      icon: const Icon(Icons.copy_outlined)
+                    ),
+                    subtitle: Text(widget.appData.pix),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.balance_outlined),
+                    title: const Text("Tranferência Bancária"),
+                    trailing: IconButton(
+                      onPressed: (){
+                        FlutterClipboard.copy(widget.appData.banco!)
+                        .then((value){
+                          print("Copiado!");
+                          ScaffoldMessenger.of(context)
+                            .showSnackBar(
+                            const SnackBar(
+                              duration: Duration(seconds: 1),
+                              backgroundColor: Colors.blue,
+                              content: Text("Copiado")
+                            ),
+                          );
+                        })
+                        .catchError((e)=> print("Erro ao copiar"));
+                      },
+                      icon: const Icon(Icons.copy_outlined)
+                    ),
+                    subtitle: Text(widget.appData.banco!),
+                  ),
                 ],
               ),
             )
