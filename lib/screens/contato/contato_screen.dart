@@ -21,7 +21,7 @@ class _ContatoScreenState extends State<ContatoScreen> {
   Future _urlLauncher(String link) async {
     final Uri url = Uri.parse(link);
     try{
-      if(!await launchUrl(url)){
+      if(!await launchUrl(url, mode: LaunchMode.externalApplication)){
         throw "Url Inválida";
       }
     } catch (e){
