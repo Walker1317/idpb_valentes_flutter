@@ -38,7 +38,7 @@ class _BaseScreenState extends State<BaseScreen> {
     if(user != null){
       print("usuario logado");
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
-      .collection("usuarios").doc(user!.uid).get();
+      .collection("usuarios").doc(user.uid).get();
       setState(() {
         usuario = Usuario.fromDocumentSnapshot(snapshot);
       });
