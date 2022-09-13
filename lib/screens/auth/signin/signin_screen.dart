@@ -158,39 +158,6 @@ class _SigninScreenState extends State<SigninScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10,),
-                GestureDetector(
-                  onTap: (){
-                    snackbar(String title, Color color){
-                      ScaffoldMessenger.of(context)
-                      .showSnackBar(
-                        SnackBar(
-                          duration: const Duration(seconds: 1),
-                          backgroundColor: color,
-                          content: Text(title)
-                        ),
-                      );
-                    }
-
-                    if(_controllerEmail.text.isEmpty){
-                      snackbar("Digite seu E-mail", Colors.red);
-                    } else {
-                      if(sendedRecoverPass == true){
-                        snackbar("Uma requisição ja foi enviada.", Colors.red);
-                      } else {
-                        sendedRecoverPass = true;
-                        FirebaseAuth.instance.sendPasswordResetEmail(email: _controllerEmail.text).then((value){}).catchError((e){});
-                        snackbar("Verifique seu E-mail", Colors.blue);
-                      }
-                    }
-
-                  },
-                  child: const Text(
-                    "Esqueci minha senha",
-                    textAlign: TextAlign.right,
-                    style: TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
-                  ),
-                ),
                 const SizedBox(height: 20,),
                 SizedBox(
                   height: 50,
@@ -214,24 +181,6 @@ class _SigninScreenState extends State<SigninScreen> {
                     child: const Text("Entrar", style: TextStyle(color: Colors.white),)
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Não possui conta? "),
-                      GestureDetector(
-                        onTap: (){
-                          FocusScope.of(context).unfocus();
-                          showDialog(context: context, builder: (context)=> const SignupScreen());
-                        },
-                        child: const Text("Cadastre-se ",
-                          style: TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           ),

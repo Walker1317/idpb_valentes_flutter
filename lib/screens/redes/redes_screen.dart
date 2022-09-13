@@ -68,14 +68,13 @@ class _RedesScreenState extends State<RedesScreen> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
+                  crossAxisCount: 2,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                 ),
                 children: [
                   AppWidgets().homeTile(Ionicons.logo_facebook, "Facebook", ()=> _urlLauncher(widget.appData.facebook)),
                   AppWidgets().homeTile(Ionicons.logo_instagram, "Instagram", ()=> _urlLauncher(widget.appData.instagram)),
-                  AppWidgets().homeTile(Ionicons.logo_tiktok, "TikTok", ()=> _urlLauncher(widget.appData.tiktok)),
                 ],
               ),
             )

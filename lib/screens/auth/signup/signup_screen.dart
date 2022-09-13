@@ -17,6 +17,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   bool obscureText = true;
+  bool adm = true;
   final TextEditingController _controllerNome = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerSenha = TextEditingController();
@@ -74,6 +75,18 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      return Colors.blue;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cadastro"),
@@ -162,6 +175,23 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 const SizedBox(height: 10,),
+                Row(
+                  children: [
+                    Checkbox(
+                      checkColor: Colors.white,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                      fillColor: MaterialStateProperty.resolveWith(getColor),
+                      value: adm,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          adm = value!;
+                        });
+                        print(adm);
+                      },
+                    ),
+                    const Text("Adicionar como Administrador.", style: TextStyle(color: Colors.grey),)
+                  ],
+                ),
                 SizedBox(
                   height: 50,
                   child: ElevatedButton(
@@ -173,7 +203,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         usuario.nome = _controllerNome.text;
                         usuario.email = _controllerEmail.text;
                         usuario.senha = _controllerSenha.text;
-                        usuario.adm = false;
+                        usuario.adm = adm;
                         usuario.link = "";
 
                         String signup = await _signup(usuario);

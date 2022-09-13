@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:idpb_valentes_app/models/usuario.dart';
+import 'package:idpb_valentes_app/screens/auth/signup/signup_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PerfilScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
             ListTile(
               leading: const Icon(Icons.email_outlined),
               title: const Text("Email"),
-              subtitle: Text(widget.usuario.email!),
+              subtitle: Text(widget.usuario.email!, overflow: TextOverflow.ellipsis,),
             ),
             widget.usuario.link.isEmpty ? Container() :
             ListTile(
@@ -50,7 +51,16 @@ class _PerfilScreenState extends State<PerfilScreen> {
                 _urlLauncher(widget.usuario.link);
               },
               leading: const Icon(Icons.link_outlined),
-              title: const Text("Link próprio"),
+              title: const Text("Link para envio de relatório"),
+              subtitle: Text(widget.usuario.link!),
+            ),
+            widget.usuario.adm == false ? Container() :
+            ListTile(
+              onTap: (){
+                showDialog(context: context, builder: (context)=> const SignupScreen());
+              },
+              leading: const Icon(Icons.person_add_alt),
+              title: const Text("Cadastrar novo usuario"),
             ),
             ListTile(
               onTap: (){

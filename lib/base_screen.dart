@@ -14,6 +14,7 @@ import 'package:idpb_valentes_app/screens/localizacao/localizacao_screen.dart';
 import 'package:idpb_valentes_app/screens/quem_somos/quem_somos.dart';
 import 'package:idpb_valentes_app/screens/ministerios/ministerios_screen.dart';
 import 'package:idpb_valentes_app/screens/redes/redes_screen.dart';
+import 'package:idpb_valentes_app/screens/sobre/sobre_screen.dart';
 import 'package:idpb_valentes_app/screens/youtube/youtube_screen.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -117,6 +118,7 @@ class _BaseScreenState extends State<BaseScreen> {
             YoutubeScreen(pageController),
             RedesScreen(pageController, appData!),
             ContribuicaoScreen(pageController, appData!),
+            SobreScreen(pageController, appData!),
           ],
         ),
       );

@@ -110,6 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   AppWidgets().homeTile(Ionicons.logo_youtube, "Culto Online", ()=> _urlLauncher(widget.appData.youtube)),
                   homeTile(Icons.hub_rounded, "Redes Sociais", 10),
                   homeTile(Icons.savings_outlined, "Contribuição", 11),
+                  homeTile(Icons.tips_and_updates_outlined, "Sobre o APP", 12),
                 ],
               ),
               const SizedBox(height: 20,),
