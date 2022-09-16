@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:idpb_valentes_app/models/app_data.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -61,9 +62,9 @@ class _ContatoScreenState extends State<ContatoScreen> {
               ),
             ),
             body: SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
+                  const SizedBox(height: 10,),
                   ListTile(
                     onTap: (){
                       _urlLauncher("mailto:${widget.appData.email}?subject=News&body=");
@@ -82,11 +83,24 @@ class _ContatoScreenState extends State<ContatoScreen> {
                   ),
                   ListTile(
                     onTap: (){
-                      _urlLauncher(widget.appData.local);
+                      FlutterClipboard.copy(widget.appData.endereco!)
+                        .then((value){
+                          print("Copiado!");
+                          ScaffoldMessenger.of(context)
+                            .showSnackBar(
+                            const SnackBar(
+                              duration: Duration(seconds: 1),
+                              backgroundColor: Colors.blue,
+                              content: Text("Copiado")
+                            ),
+                          );
+                        })
+                        .catchError((e)=> print("Erro ao copiar"));
                     },
                     leading: const Icon(Icons.location_pin),
                     title: const Text("Endereço"),
                     subtitle: Text(widget.appData.endereco),
+                    trailing: const Icon(Icons.copy, color: Colors.grey,),
                   ),
                 ],
               ),

@@ -78,7 +78,7 @@ class _ContribuicaoScreenState extends State<ContribuicaoScreen> {
                   ),
                   ListTile(
                     leading: const Icon(Icons.balance_outlined),
-                    title: const Text("Tranferência Bancária"),
+                    title: const Text("Transferência Bancária"),
                     trailing: IconButton(
                       onPressed: (){
                         FlutterClipboard.copy(widget.appData.banco!)

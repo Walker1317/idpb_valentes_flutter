@@ -117,8 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               const SizedBox(height: 20,),
-              TextButton(
-                onPressed: (){
+              GestureDetector(
+                onTap: (){
                   _urlLauncher(widget.appData.site);
                 },
                 child: const Text(
