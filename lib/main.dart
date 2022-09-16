@@ -2,11 +2,26 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:idpb_valentes_app/base_screen.dart';
+import 'package:idpb_valentes_app/services/messaging/firebase_messaging_services.dart';
+import 'package:idpb_valentes_app/services/messaging/notification_service.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider<NotificationService>(
+          create: (context) => NotificationService(),
+        ),
+        Provider<FirebaseMessagingService>(
+          create: (context) => FirebaseMessagingService(context.read<NotificationService>()),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

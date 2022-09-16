@@ -16,6 +16,9 @@ import 'package:idpb_valentes_app/screens/ministerios/ministerios_screen.dart';
 import 'package:idpb_valentes_app/screens/redes/redes_screen.dart';
 import 'package:idpb_valentes_app/screens/sobre/sobre_screen.dart';
 import 'package:idpb_valentes_app/screens/youtube/youtube_screen.dart';
+import 'package:idpb_valentes_app/services/messaging/firebase_messaging_services.dart';
+import 'package:idpb_valentes_app/services/messaging/notification_service.dart';
+import 'package:provider/provider.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key});
@@ -75,9 +78,19 @@ class _BaseScreenState extends State<BaseScreen> {
     });
   }
 
+  initializeFirebaseMessaging() async {
+    await Provider.of<FirebaseMessagingService>(context, listen: false).initialize();
+  }
+
+  checkNotifications() async {
+    await Provider.of<NotificationService>(context, listen: false).checkForNotifications();
+  }
+
   @override
   void initState() {
     super.initState();
+    initializeFirebaseMessaging();
+    checkNotifications();
     _recoverUserData();
   }
 

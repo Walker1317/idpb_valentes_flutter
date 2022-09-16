@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:idpb_valentes_app/models/app_data.dart';
 import 'package:idpb_valentes_app/models/usuario.dart';
 import 'package:idpb_valentes_app/screens/auth/signin/signin_screen.dart';
 import 'package:idpb_valentes_app/screens/perfil_screen/perfil_screen.dart';
+import 'package:idpb_valentes_app/services/messaging/notification_service.dart';
 import 'package:idpb_valentes_app/widgets/app_widgets.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -64,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("IDPB Valentes"),
         actions: [
           IconButton(
-            onPressed: (){
+            onPressed: () async {
               User? user = FirebaseAuth.instance.currentUser;
               showDialog(
                 context: context,
@@ -114,7 +117,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               const SizedBox(height: 20,),
-              const Text("www.idpbvalentes.com", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)
+              TextButton(
+                onPressed: (){
+                  _urlLauncher(widget.appData.site);
+                },
+                child: const Text(
+                  "www.idpbvalentes.com",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white
+                  ),
+                ),
+              ),
             ],
           ),
         ),

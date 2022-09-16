@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:idpb_valentes_app/models/agenda.dart';
 import 'package:idpb_valentes_app/widgets/dialog_services.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class CreateEvent extends StatefulWidget {
   const CreateEvent({super.key});
@@ -18,11 +22,43 @@ class _CreateEventState extends State<CreateEvent> {
   final TextEditingController _controllerHora = TextEditingController();
   DateTime? data;
 
+  Future _sendCreatedNotifications(String title , String body , String id) async {
+    var serverToken = "" ; 
+    await FirebaseMessaging.instance.subscribeToTopic('all');
+    await http.post(
+      Uri.parse('https://fcm.googleapis.com/fcm/send'),
+      headers:<String,String>{'Content-Type':'application/json',
+      'Authorization':'key=$serverToken',},
+      body: jsonEncode(
+        <String, dynamic>{
+          'topic': "all",
+          'data': {
+            'via': 'FlutterFire Cloud Messaging!!!',
+            'count': "1",
+          },
+          'notification':<String,dynamic>{
+            'body':body.toString(),
+            'title':title.toString(),
+            'priority':'high',
+            'data':<String,dynamic>{
+            'click_action':'FLUTTER_NOTIFICATION_CLICK',
+            'id':id.toString()},
+          },
+        }
+      )
+    );
+  }
+
+  _pop(){
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
+  }
+
   _uploadEvento(Agenda agenda){
     FirebaseFirestore.instance.collection("agenda")
-    .doc(agenda.id).set(agenda.toMap()).then((value){
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
+    .doc(agenda.id).set(agenda.toMap()).then((value) async {
+      await _sendCreatedNotifications("Novo evento disponível!", "${agenda.title}", "1");
+      _pop();
     }).catchError((e){
       Navigator.of(context).pop();
       DialogServices.showAlertDialog(context, "Tivemos um Problema ao salvar evento.");

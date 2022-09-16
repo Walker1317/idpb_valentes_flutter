@@ -90,13 +90,26 @@ class _SobreScreenState extends State<SobreScreen> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 40,),
-                  const Text(
-                    "Aplicativo desenvolvido por:",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.grey
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      "Aplicativo idealizado e desenvolvido em parceria por Interestelar e IDPB Valentes",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey
+                      ),
                     ),
                   ),
+                  const SizedBox(height: 40,),
+                  const Text(
+                    "IDPB Valentes®",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18
+                    ),
+                  ),
+                  const SizedBox(height: 10,),
                   const Text(
                     "Interestelar Studios®",
                     textAlign: TextAlign.center,
@@ -106,6 +119,26 @@ class _SobreScreenState extends State<SobreScreen> {
                     ),
                   ),
                   const SizedBox(height: 40,),
+                  TextButton(
+                    onPressed: (){
+                      _urlLauncher(widget.appData.site);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "www.idpbvalentes.com",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.blue
+                          ),
+                        ),
+                        SizedBox(width: 10,),
+                        Icon(Icons.arrow_right_alt_rounded, color: Colors.blue,)
+                      ],
+                    ),
+                  ),
                   TextButton(
                     onPressed: (){
                       _urlLauncher(widget.appData.criador);

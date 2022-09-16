@@ -14,6 +14,7 @@ class AppData{
   String? _youtube;
   String? _estudos;
   String? _criador;
+  String? _site;
  String? get banco => this._banco;
 
  set banco(String? value) => this._banco = value;
@@ -62,6 +63,10 @@ class AppData{
 
  set criador( value) => this._criador = value;
 
+  get site => this._site;
+
+ set site( value) => this._site = value;
+
  AppData.fromDocumentSnapshot(DocumentSnapshot documentSnapshot){
     this.banco = documentSnapshot["banco"];
     this.email = documentSnapshot["email"];
@@ -75,6 +80,7 @@ class AppData{
     this.youtube = documentSnapshot["youtube"];
     this.estudos = documentSnapshot["estudos"];
     this.criador = documentSnapshot["criador"];
+    this.site = documentSnapshot["site"];
   }
 
 }
